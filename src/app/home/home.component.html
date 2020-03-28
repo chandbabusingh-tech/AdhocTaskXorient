@@ -1,0 +1,86 @@
+<div class="row">
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th class="text-center">Name</th>
+          <th class="text-center">Gender</th>
+          <th class="text-center">Salary</th>
+          <th class="text-center">DOJ</th>
+          <th class="text-center"></th>
+          <th class="text-center"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let avg of avengerData | async">
+          <td class="text-center">{{ avg.Name }}</td>
+          <td class="text-center">{{ avg.Gender }}</td>
+          <td class="text-center">{{ avg.Salary | currency: "INR" }}</td>
+          <td class="text-center">{{ avg.DOJ | date: "mediumDate" }}</td>
+          <td class="text-center">
+            <button class="btn btn-primary" (click)="updateRec(avg)">Update</button>
+          </td>
+          <td class="text-center">
+            <button class="btn btn-primary" (click)="deleteRec(avg)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot class="bg-dark">
+          <tr>
+            <td>
+              <input
+                type="text"
+                required
+                [ngClass]="isValid: bg-dangerv ? bg-dark"
+                class="form-control"
+                [(ngModel)]="insertVal.Name"
+              />
+            </td>
+            <td>
+              <select
+                id="Gender"
+                required
+                [(ngModel)]="insertVal.Gender"
+                class="form-control"
+                (change)="onChange($event)"
+              >
+                <option
+                  *ngFor="let op of genderList"
+                  [value]="op.id"
+                  [attr.selected]="insertVal.Gender"
+                  >{{ op.name }}</option
+                >
+              </select>
+            </td>
+            <td>
+              <input
+                type="number"
+                required
+                min="0"
+                step="1"
+                class="text-center form-control"
+                [(ngModel)]="insertVal.Salary"
+              />
+            </td>
+            <td>
+              <input
+                type="date"
+                required
+                class="form-control text-center"
+                data-date-format="DD MMMM YYYY"
+                [(ngModel)]="insertVal.DOJ"
+              />
+            </td>
+            <td class="text-center">
+              <button class="btn btn-primary" (click)="addRecord()">Submit</button>
+            </td>
+            <td class="text-center">
+              <button class="btn btn-primary" (click)="clearRec()">
+                &nbsp;Clear&nbsp;
+              </button>
+            </td>
+          </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
