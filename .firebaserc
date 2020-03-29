@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "adhoctaskxorient": {
+      "hosting": {
+        "AngularProject": [
+          "adhoctaskxorient"
+        ]
+      }
+    }
+  }
+}
