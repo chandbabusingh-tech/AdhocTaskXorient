@@ -1,17 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DatePipe, CurrencyPipe } from '@angular/common';
-import {
-  NgbDateStruct,
-  NgbCalendar,
-  NgbDropdown
-} from '@ng-bootstrap/ng-bootstrap';
-import {
-  FormArray,
-  FormGroupName,
-  FormGroup,
-  FormBuilder,
-  FormControl
-} from '@angular/forms';
 import { AvengersService } from '../service/home.service';
 import { Avengers } from '../model/avengers';
 import { Observable } from 'rxjs';
@@ -30,34 +17,36 @@ export class HomeComponent implements OnInit {
     { id: 'Male', name: 'Male' },
     { id: 'Female', name: 'Female' }
   ];
+  public isValidFormsControlName: boolean = true;
+  public isValidFormsControlSalary: boolean = true;
   constructor(
     private avengersService: AvengersService
   ) {
-    this.insertVal = new Avengers(0, '', 'Other', 0.0, '');
+    this.insertVal = new Avengers(0, '', 'Other', 0, '');
   }
 
   ngOnInit(): void {
     this.avengerData = this.avengersService.getAvengers();
     this.insertVal.DOJ = new Date();
   }
-  Validate():void{
-    this.insertVal.Name;
+  validate(): boolean {
+    if(this.insertVal.Name){
+      this.isValidFormsControlName = true;
+    }else{this.isValidFormsControlName=false;}
+    if(this.insertVal.Salary){
+      try{parseFloat(this.insertVal.Salary);this.isValidFormsControlSalary = true;}
+      catch(error){console.error(error); this.isValidFormsControlSalary = false;}
+    }else{
+      this.isValidFormsControlSalary=false;
+    }
+    if(this.isValidFormsControlName && this.isValidFormsControlSalary){
+      return true;
+    }else{
+      return false;
+    }
   }
   addRecord(): void {
-
-    if (this.insertVal.Id > 0) {
-      //update
-      AVENGERS.avengersArr.forEach(data => {
-        if ((data.Id == this.insertVal.Id)) {
-          data.Id = this.insertVal.Id;
-          data.Name = this.insertVal.Name;
-          data.Gender = this.insertVal.Gender;
-          data.Salary = this.insertVal.Salary;
-          data.DOJ = this.insertVal.DOJ;
-        }
-      });
-    } else {
-      //insert
+    if(this.validate()){
       if (this.insertVal.Id == 0) {
         this.insertVal.Id = AVENGERS.avengersArr.length + 1;
         AVENGERS.avengersArr.push(
@@ -69,17 +58,25 @@ export class HomeComponent implements OnInit {
             DOJ:    this.insertVal.DOJ
           });
       }
+      this.clearRec();
     }
-    this.clearRec();
   }
-
   updateRec(avg: any): void {
     this.logValues(avg);
-    this.insertVal.Id = avg.Id;
-    this.insertVal.Name = avg.Name;
-    this.insertVal.Gender = avg.Gender;
-    this.insertVal.Salary = avg.Salary;
-    this.insertVal.DOJ = avg.DOJ;
+    if(this.validate()){
+      if (this.insertVal.Id > 0) {
+        AVENGERS.avengersArr.forEach(data => {
+          if ((data.Id == avg.Id)) {
+            data.Id = avg.Id;
+            data.Name = avg.Name;
+            data.Gender = avg.Gender;
+            data.Salary = avg.Salary;
+            data.DOJ = avg.DOJ;
+          }
+        });
+      }
+      this.clearRec();
+    }
   }
   deleteRec(avg: any): void {
     this.logValues(avg);
@@ -89,16 +86,16 @@ export class HomeComponent implements OnInit {
         AVENGERS.avengersArr.splice(i, 1);
       }
     }
+    this.clearRec();
   }
   clearRec(): void {
     this.insertVal.Id = 0;
     this.insertVal.Name = '';
     this.insertVal.Gender = 'Other';
-    this.insertVal.Salary = 0.0;
+    this.insertVal.Salary = 0;
     this.insertVal.DOJ = '';
-  }
-  onChange($event){
-    console.log(this.insertVal.Gender);
+    this.isValidFormsControlName = true;
+    this.isValidFormsControlSalary = true;
   }
   private logValues(avg: any) {
     console.log(avg.Id);

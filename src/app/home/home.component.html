@@ -13,10 +13,52 @@
       </thead>
       <tbody>
         <tr *ngFor="let avg of avengerData | async">
-          <td class="text-center">{{ avg.Name }}</td>
-          <td class="text-center">{{ avg.Gender }}</td>
-          <td class="text-center">{{ avg.Salary | currency: "INR" }}</td>
-          <td class="text-center">{{ avg.DOJ | date: "mediumDate" }}</td>
+          <td class="text-center">
+            <input
+                type="text"
+                required
+                [ngClass]="[isValidFormsControlName ? 'border border-info' : 'border border-danger']"
+                class="form-control"
+                [value]="avg.Name"
+                [(ngModel)]="avg.Name"
+              />
+          </td>
+          <td class="text-center">
+            <select
+                id="Gender"
+                required
+                [(ngModel)]="avg.Gender"
+                class="form-control border border-info"
+              >
+                <option
+                  *ngFor="let op of genderList"
+                  [value]="op.id"
+                  [attr.selected]="avg.Gender"
+                  >{{ op.name }}</option
+                >
+              </select>
+          </td>
+          <td class="text-center">
+            <input
+                type="number"
+                required
+                min="0"
+                step="1"
+                class="text-center form-control"
+                [value]="avg.Salary"
+                [ngClass]="[isValidFormsControlSalary ? 'border border-info' : 'border border-danger']"
+                [(ngModel)]="avg.Salary"
+              />
+           </td>
+          <td class="text-center">
+            <input
+                type="date"
+                required
+                class="form-control text-center border border-info"
+                [value]="avg.DOJ"
+                [(ngModel)]="avg.DOJ"
+              />
+            </td>
           <td class="text-center">
             <button class="btn btn-primary" (click)="updateRec(avg)">Update</button>
           </td>
@@ -31,7 +73,7 @@
               <input
                 type="text"
                 required
-                [ngClass]="isValid: bg-dangerv ? bg-dark"
+                [ngClass]="[isValidFormsControlName ? 'border border-info' : 'border border-danger']"
                 class="form-control"
                 [(ngModel)]="insertVal.Name"
               />
@@ -41,8 +83,7 @@
                 id="Gender"
                 required
                 [(ngModel)]="insertVal.Gender"
-                class="form-control"
-                (change)="onChange($event)"
+                class="form-control border border-info"
               >
                 <option
                   *ngFor="let op of genderList"
@@ -59,6 +100,7 @@
                 min="0"
                 step="1"
                 class="text-center form-control"
+                [ngClass]="[isValidFormsControlSalary ? 'border border-info' : 'border border-danger']"
                 [(ngModel)]="insertVal.Salary"
               />
             </td>
@@ -66,18 +108,16 @@
               <input
                 type="date"
                 required
-                class="form-control text-center"
+                class="form-control text-center border border-info"
                 data-date-format="DD MMMM YYYY"
                 [(ngModel)]="insertVal.DOJ"
               />
             </td>
             <td class="text-center">
-              <button class="btn btn-primary" (click)="addRecord()">Submit</button>
+              <button class="btn btn-primary" (click)="addRecord()">&nbsp;Insert&nbsp;</button>
             </td>
             <td class="text-center">
-              <button class="btn btn-primary" (click)="clearRec()">
-                &nbsp;Clear&nbsp;
-              </button>
+              <button class="btn btn-primary" (click)="clearRec()">&nbsp;Clear&nbsp;</button>
             </td>
           </tr>
       </tfoot>
