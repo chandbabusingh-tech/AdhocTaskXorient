@@ -97,9 +97,7 @@ export class HomeComponent implements OnInit {
         this.isValidFormsControlName = true;
       }else{this.isValidFormsControlName=false;validationMsgName='*Enter the Name. ';}
       if(this.insertVal.Salary){
-        try{
-            this.isValidFormsControlSalary = true;          
-        }
+        try{ parseInt(this.insertVal); this.isValidFormsControlSalary = true; }
         catch(error){console.error(error); this.isValidFormsControlSalary = false;validationMsgSalary='*Enter the valid Salary. ';}
       }else{
         this.isValidFormsControlSalary=false;validationMsgSalary='*Enter the Salary. ';
@@ -132,9 +130,7 @@ export class HomeComponent implements OnInit {
     let isValidFormsControlDOJUpdate: boolean;
       if(avg.Name){ isValidFormsControlNameUpdate=true; } else { isValidFormsControlNameUpdate=false; validationMsgName='*Enter the Name. '; }
       if(avg.Salary){
-        try{
-              isValidFormsControlSalaryUpdate = true;         
-          }
+        try{ parseInt(avg.Salary); isValidFormsControlSalaryUpdate = true;}
         catch(error){console.error(error); isValidFormsControlSalaryUpdate =false; validationMsgSalary='*Enter the valid Salary. ';}
       }else{
         isValidFormsControlSalaryUpdate =false;

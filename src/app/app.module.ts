@@ -8,8 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 
-import { DatePipe, AsyncPipe, CurrencyPipe, UpperCasePipe, TitleCasePipe, DecimalPipe } from '@angular/common';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +23,7 @@ import { DatePipe, AsyncPipe, CurrencyPipe, UpperCasePipe, TitleCasePipe, Decima
     NgbPaginationModule,
     NgbAlertModule
   ],
-  providers: [DatePipe, AsyncPipe, CurrencyPipe, UpperCasePipe, TitleCasePipe, DecimalPipe],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
