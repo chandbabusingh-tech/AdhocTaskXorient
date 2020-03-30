@@ -1,4 +1,9 @@
 <div class="row">
+  <div class="w-100 text-center">
+    <ngb-alert *ngIf="successMessage" type="success" (close)="successMessage = ''">{{ successMessage }}</ngb-alert>
+  </div>
+</div>
+<div class="row">
   <div class="table-responsive">
     <table class="table table-hover table-bordered">
       <thead class="thead-dark">
@@ -17,7 +22,7 @@
             <input
                 type="text"
                 required
-                [ngClass]="[isValidFormsControlName ? 'border border-info' : 'border border-danger']"
+                [ngClass]="[avg.Name ? 'border border-info' : 'border border-danger']"
                 class="form-control"
                 [value]="avg.Name"
                 [(ngModel)]="avg.Name"
@@ -42,11 +47,9 @@
             <input
                 type="number"
                 required
-                min="0"
-                step="1"
                 class="text-center form-control"
                 [value]="avg.Salary"
-                [ngClass]="[isValidFormsControlSalary ? 'border border-info' : 'border border-danger']"
+                [ngClass]="[avg.Salary ? 'border border-info' : 'border border-danger']"
                 [(ngModel)]="avg.Salary"
               />
            </td>
@@ -56,6 +59,7 @@
                 required
                 class="form-control text-center border border-info"
                 [value]="avg.DOJ"
+                [ngClass]="[avg.DOJ ? 'border border-info' : 'border border-danger']"
                 [(ngModel)]="avg.DOJ"
               />
             </td>
@@ -97,8 +101,6 @@
               <input
                 type="number"
                 required
-                min="0"
-                step="1"
                 class="text-center form-control"
                 [ngClass]="[isValidFormsControlSalary ? 'border border-info' : 'border border-danger']"
                 [(ngModel)]="insertVal.Salary"
@@ -109,6 +111,7 @@
                 type="date"
                 required
                 class="form-control text-center border border-info"
+                [ngClass]="[isValidFormsControlDOJ ? 'border border-info' : 'border border-danger']"
                 data-date-format="DD MMMM YYYY"
                 [(ngModel)]="insertVal.DOJ"
               />
