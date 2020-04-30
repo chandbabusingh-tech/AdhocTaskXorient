@@ -26,7 +26,7 @@
     "firebase": ">= 5.5.7 <8",
     "font-awesome": "^4.7.0",
     "install": "^0.13.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "ng2-bootstrap-growl": "0.0.5",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
